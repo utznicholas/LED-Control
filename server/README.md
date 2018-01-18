@@ -35,6 +35,7 @@ Redux store state:
       id: number,
       name: string,
       channels: number[],
+      duration: number,
       stops: {
         {target}: {
           offset: number,
