@@ -1,6 +1,7 @@
 # LED Control Server
 
 Redux store state:
+```
 {
   devices: {
     {id}: {
@@ -10,7 +11,7 @@ Redux store state:
       indices: number[],
       tune: number[]
     },
-    devices: nimber[]
+    devices: number[]
   },
   channels: {
     {addr}: {
@@ -66,6 +67,7 @@ Redux store state:
     instances: number[]
   }
 }
+```
 
 ## Future Ideas
 * some system for 'scripting' as opposed to explicit timelining (for things like randomization)
