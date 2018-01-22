@@ -121,7 +121,7 @@ Subscribe packet.
 #### Sub packet
 | Packet Start | Packet Type | Device ID | Port Count |
 |:------------:|:-----------:|:---------:|:----------:|
-|  0xDEADBEEF  | 0x01        | uint32    | uint32     |
+|  0xDEADBEEF  | 0x01        | uint32    | uint8      |
 
 The port count is included in the subscribe packet to simplify
 the process of adding new devices to a server. Instead of 
@@ -141,7 +141,7 @@ the server sends the connected Device a Publish packet.
 #### Pub packet
 | Packet Start | Packet Type | Device ID | Payload Size | Port N state... |
 |:------------:|:-----------:|:---------:|:------------:|:---------------:|
-|  0xDEADBEEF  | 0x02        | uint32    | uint32       | uint16...       |
+|  0xDEADBEEF  | 0x02        | uint32    | uint8       | uint16...       |
 
 The Payload Size of the Pub packet is measured in bytes,
 thus imposing a limit of 128 ports per device. The state
