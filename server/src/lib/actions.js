@@ -71,14 +71,12 @@ export function stopTimelineBulk(instances) {
 }
 
 export const LOADED_DEVICE = "LOADED_DEVICE";
-export function loadedDevice(id, name, ports, indices, tune) {
+export function loadedDevice(id, name, ports) {
   return {
     type: LOADED_DEVICE,
     id: id,
     name: name,
-    ports: ports,
-    indices: indices,
-    tune: tune
+    ports: ports
   };
 }
 
@@ -157,9 +155,11 @@ function deviceCreated(id, name, ports, indices, tune) {
     type: CREATE_DEVICE,
     id: id,
     name: name,
-    ports: ports,
-    indices: indices,
-    tune: tune
+    ports: ports.map((e, i) => {
+      return [
+        e, indices[i], tune[i]
+      ];
+    })
   };
 }
 export function createDevice(id, name, ports, indices, tune) {
@@ -185,13 +185,22 @@ function deviceUpdated(id, name, ports, indices, tune) {
     type: UPDATE_DEVICE,
     id: id,
     name: name,
-    ports: ports,
-    indices: indices,
-    tune: tune
+    ports: ports.map((e, i) => {
+      return [
+        e, indices[i], tune[i]
+      ];
+    })
   };
 }
-export function updateDevice(id, name, ports, indices, tune) {
+export function updateDevice(id, name, ports) {
   return function(dispatch) {
+    let indices = [];
+    let tune = [];
+    ports = ports.map((e, i) => {
+      indices[i] = e[1];
+      tune[i] = e[2];
+      return e[0];
+    });
     let prev = store.getState().devices[id];
     name = name || prev.name;
     ports = ports || prev.ports;

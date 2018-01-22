@@ -87,7 +87,7 @@ export class DeviceConnection {
     this._subscriptions.forEach((d) => {
       d = state.devices[d];
       let values = d.ports.map((c, i) => {
-        return Math.round(state.channels[c].state[d.indices[i]] * d.tune[i]);
+        return Math.round(state.channels[c[0]].state[c[1]] * c[2]);
       });
       let packetSize = 4 + 1 + 4 + 4 + (2 * values.length);
       let buf = Buffer.allocUnsafe(packetSize);

@@ -12,7 +12,11 @@ export default function load(nSQL, store) {
     nSQL("device").query("select").exec().then((rows) => {
       let batch = new Actions.BatchAction();
       rows.forEach((e) => {
-        batch.append(Actions.loadedDevice(e.id, e.name, e.ports, e.indices, e.tune));
+        batch.append(Actions.loadedDevice(e.id, e.name, e.ports.map((e, i) => {
+          return [
+            e, e.indices[i], e.tune[i]
+          ];
+        })));
       });
       store.dispatch(batch);
     }),

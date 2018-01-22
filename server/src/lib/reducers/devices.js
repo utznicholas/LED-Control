@@ -13,8 +13,6 @@ export default function reduce(state = {devices: []}, action) {
       let device = newState[action.id];
       device.name = action.name;
       device.ports = action.ports;
-      device.indices = action.indices;
-      device.tune = action.tune;
       return newState;
     case LOADED_DEVICE :
     case CREATE_DEVICE :
@@ -22,9 +20,7 @@ export default function reduce(state = {devices: []}, action) {
       let newDevice = {
         id: action.id,
         name: action.name,
-        ports: action.ports,
-        indices: action.indices,
-        tune: action.tune
+        ports: action.ports
       };
       newState[newDevice.id] = newDevice;
       newState.devices.push(newDevice.id);
