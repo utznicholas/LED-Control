@@ -7,9 +7,11 @@ Redux store state:
     {id}: {
       id: number,
       name: string,
-      ports: number[],
-      indices: number[],
-      tune: number[]
+      ports: [
+        channel: number,
+        index: number,
+        tune: number
+      ][]
     },
     devices: number[]
   },
