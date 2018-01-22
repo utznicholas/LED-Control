@@ -105,6 +105,26 @@ export default class WebApi {
     if (m.type == "action") {
       console.log("[WS API] Received Action from WS client");
       this._store.dispatch(m.action);
+      
+    } else if (m.type == "thunk") {
+      let thunk = m.thunk;
+      console.log("[WS API] Received Thunk from WS client");
+      switch (thunk.type) {
+        case Actions.UPDATE_DEVICE: this._store.dispatch(Actions.updateDevice(thunk.id, thunk.name, thunk.ports)); break;
+        case Actions.DELETE_DEVICE: this._store.dispatch(Actions.deleteDevice(thunk.id)); break;
+        case Actions.UPDATE_CHANNEL: this._store.dispatch(Actions.updateChannel(thunk.addr, thunk.name, thunk.size)); break;
+        case Actions.DELETE_CHANNEL: this._store.dispatch(Actions.deleteChannel(thunk.addr)); break;
+        case Actions.CREATE_COLOR: this._store.dispatch(Actions.createColor(thunk.name, thunk.color)); break;
+        case Actions.UPDATE_COLOR: this._store.dispatch(Actions.updateColor(thunk.id, thunk.name, thunk.color)); break;
+        case Actions.DELETE_COLOR: this._store.dispatch(Actions.deleteColor(thunk.id)); break;
+        case Actions.CREATE_TIMELINE: this._store.dispatch(Actions.createTimeline(thunk.name, thunk.duration, thunk.channels)); break;
+        case Actions.UPDATE_TIMELINE: this._store.dispatch(Actions.updateTimeline(thunk.id, thunk.name, thunk.duration, thunk.channels, thunk.stops)); break;
+        case Actions.DELETE_TIMELINE: this._store.dispatch(Actions.deleteTimeline(thunk.id)); break;
+        case Actions.CREATE_SCHEDULE: this._store.dispatch(Actions.createSchedule(thunk.name, thunk.tab, thunk.timeline, thunk.enabled, thunk.channels)); break;
+        case Actions.UPDATE_SCHEDULE: this._store.dispatch(Actions.updateSchedule(thunk.id, thunk.name, thunk.tab, thunk.timeline, thunk.enabled, thunk.channels)); break;
+        case Actions.DELETE_SCHEDULE: this._store.dispatch(Actions.deleteSchedule(thunk.id)); break;
+        default: console.log("[WS API] Unrecognized thunk type: ", thunk.type);
+      }
     }
   }
 }
