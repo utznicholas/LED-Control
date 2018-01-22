@@ -26,9 +26,7 @@ export default class Reducer extends EventEmitter {
   reduce(state = {}, action = {}) {
     let newState;
     if (action.type == Actions.BATCH_ACTION) {
-      newState = Object.assign({}, state, {
-        lastAction: Actions.BATCH_ACTION
-      });
+      newState = Object.assign({}, state);
       let actions = action.actions;
       for (let i = 0; i < actions.length; i++) {
         let act = actions[i];
@@ -44,7 +42,6 @@ export default class Reducer extends EventEmitter {
 
     } else {
       newState = {
-        lastAction: action.type,
         devices: Devices.reduce(state.devices, action),
         channels: Channels.reduce(state.channels, action),
         colors: Colors.reduce(state.colors, action),
