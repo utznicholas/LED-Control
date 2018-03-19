@@ -23,28 +23,23 @@ console.log("[init] Creating Redux Store");
 var reducer = new Reducer();
 var store = createStore(reducer);
 
-// load everything
-let prmLoad;
-prmDB.then(() => {
-  console.log("[init] DB ready, loading data");
-  prmLoad = Load(nSQL, store);
-});
-
-// initialize tcp control server
-let prmDSrv;
 let deviceServer = new DeviceServer(store);
-prmLoad.then(() => {
-  console.log("[init] Data loaded");
-  console.log("[init] Initializing device server");
-  prmDSrv = deviceServer.listen(12321);
-});
-
-// initialize Express web server
 var app = Express();
 var ws = ExpressWs(app);
 var api = new WebApi(app);
-prmDSrv.then(() => {
+
+prmDB.then(() => {
+  console.log("[init] DB ready, loading data");
+  return Load(nSQL, store);
+  
+}).then(() => {
+  console.log("[init] Data loaded");
+  console.log("[init] Initializing device server");
+  return deviceServer.listen(12321);
+  
+}).then(() => {
   console.log("[init] Device server ready");
   console.log("[init] Initializing web server");
   app.listen(80);
+  console.log("[init] Web server ready");
 });
